@@ -90,21 +90,19 @@ app.post("/", function (req, res) {
   url = "https://api.wheretheiss.at/v1/satellites/25544/positions?timestamps="+unix_epoch_arr.join();
 
 
-  // (async () => {
-  //   try {
-  //     const res = await fetch(url);
-  //     const headerDate = res.headers && res.headers.get('date') ? res.headers.get('date') : 'no response date';
-  //     console.log('Status Code:', res.status);
-  //     console.log('Date in Response header:', headerDate);
+  (async () => {
+    try {
+      const res = await fetch(url);
+      const headerDate = res.headers && res.headers.get('date') ? res.headers.get('date') : 'no response date';
   
-  //     const users = await res.json();
-  //     for(user of users) {
-  //       console.log(`Got user with id: ${user.footprint}, name: ${user.timestamp}`);
-  //     }
-  //   } catch (err) {
-  //     console.log(err.message); //can be console.error
-  //   }
-  // })();
+      const users = await res.json();
+      for(user of users) {
+        console.log(`Got user timestamp: ${user.timestamp}, latitude: ${user.latitude}, longitude:${user.longitude}`);
+      }
+    } catch (err) {
+      console.log(err.message); //can be console.error
+    }
+  })();
   
   //res.send(myDate);
 //   res.send("Date: "+date.getDate()+
