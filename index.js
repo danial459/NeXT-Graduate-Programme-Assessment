@@ -27,6 +27,10 @@ app.post("/", function (req, res) {
   hour = timeArr[0];
   minute = timeArr[1];
 
+  var add_minutes =  function (dt, minutes) {
+    return new Date(dt.getTime() + minutes*60000);
+  }
+
   // // var date = new Date(); // Your timezone!  
   // // var myEpoch = date.getTime()/1000;
   // // var myEpoch2 = Math.trunc(myEpoch)
@@ -40,12 +44,18 @@ app.post("/", function (req, res) {
   //a = moment(date_time).format("YYYY-MM-DD HH:mm Z");
 
   a_date = new Date(Date.UTC(year, month, day, hour, minute, 0));
-  b_date = a_date.setMinutes(a_date.getMinutes()+10);
+  b_date = add_minutes(a_date,10);
+  //b_date = a_date.setMinutes(a_date.getMinutes()+10);
   var myEpoch = a_date.getTime()/1000;
   var myEpoch2 = Math.trunc(myEpoch)
 
-  res.send(b_date+" ");
+
+
+  res.send(b_date.toUTCString());
   
+  // res.render('home', {
+  //   alert
+  // })
 
   //res.send(myDate);
 //   res.send("Date: "+date.getDate()+
