@@ -1,24 +1,18 @@
 const express = require('express');
-var moment = require('moment');  
 const bodyparser = require("body-parser");
 const app = express();
-const router = express.Router();
+
 app.use(bodyparser.urlencoded({ extended: true }));
+app.set('view engine','ejs');
 
 const path = __dirname + '/views/';
 const port = 8090;
 
-router.use(function (req,res,next) {
-console.log('/' + req.method);
-next();
-});
+app.get('/', (req, res)=> {
+  res.render('home')
+})
 
-router.get('/', function(req,res){
-res.sendFile(path + 'home.html');
-});
-
-
-app.post("/details", function (req, res) {
+app.post("/", function (req, res) {
  
   date = req.body.date;
   time = req.body.time;
@@ -46,10 +40,11 @@ app.post("/details", function (req, res) {
   //a = moment(date_time).format("YYYY-MM-DD HH:mm Z");
 
   a_date = new Date(Date.UTC(year, month, day, hour, minute, 0));
+  b_date = a_date.setMinutes(a_date.getMinutes()+10);
   var myEpoch = a_date.getTime()/1000;
   var myEpoch2 = Math.trunc(myEpoch)
 
-  res.send(myEpoch2+" ");
+  res.send(b_date+" ");
   
 
   //res.send(myDate);
@@ -71,8 +66,8 @@ app.post("/details", function (req, res) {
 
 
 
-app.use(express.static(path));
-app.use('/', router);
+// app.use(express.static(path));
+// app.use('/', router);
 
 app.listen(port, function () {
 console.log('Nodejs Express Example App listening on port ' + port)
