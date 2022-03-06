@@ -1,0 +1,1 @@
+const openGeocoder = require('node-open-geocoder');
