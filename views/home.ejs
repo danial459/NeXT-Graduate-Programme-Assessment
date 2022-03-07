@@ -86,7 +86,7 @@ axios.get("<%=url%>")
     while(i<response.data.length){
       id_cell = "lat_"+i.toString();
 
-      document.getElementById(id_cell).innerHTML = response.data[i].latitude;
+      document.getElementById(id_cell).innerHTML = response.data[i].longitude+","+response.data[i].latitude;
 
     i++;
     }
