@@ -16,7 +16,7 @@
 <nav class="navbar navbar-dark bg-dark navbar-static-top navbar-expand-md">
 <div class="container">
 <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false"> <span class="sr-only">Toggle navigation</span>
-</button> <a class="navbar-brand" href="#">Awesome Recipes</a>
+</button> <a class="navbar-brand" href="#">Next Assessment Submission</a>
 
 <div class="collapse navbar-collapse justify-content-center" id="bs-example-navbar-collapse-1">
 
@@ -57,7 +57,7 @@
       <tr>
        <td> <%= table_arr[i].date %></td>
        <td> <%= table_arr[i].timestamp %></td>
-       <td id="<%=i%>"></td>
+       <td id="lat_<%=i%>"></td>
       </tr>          
     <%   i++;} %>
 <% } %>
@@ -76,27 +76,27 @@
 
 
 
-  <%
+<% if(typeof url != 'undefined') { %>
+  <script>
 
-  if(typeof url != 'undefined') {
-  fetch(url)
-  .then(res => res.json())
-  .then(json => {
+axios.get("<%=url%>")
+  .then(function (response) {
     i=0;
-    while(i<json.length){
-      id = i.toString();
-        openGeocoder()
-        .reverse(json[i].longitude, json[i].latitude)
-        .end((err, res) => { 
-        
-          console.log(res.place_id);
-          
-         })
-        
-      i++;
-    }
+    console.log(response.data.length);
+    while(i<response.data.length){
+      id_cell = "lat_"+i.toString();
 
-})
-  }
-  %>
+      document.getElementById(id_cell).innerHTML = response.data[i].latitude;
+
+    i++;
+    }
+  })
+  .catch(function (error) {
+    console.log(error);
+  })
+  .then(function () {
+  });
+  </script>
+<% } %>
+
 
